@@ -3,6 +3,7 @@
 #contact : adamsifate@gmail.ch
 
 import datetime
+import sys
 
 class Magasin():
     def __init__(self) -> None:
@@ -63,12 +64,32 @@ class Magasin():
             return False
         
     def NextOpeningDate(self,date):
-
-        while self.IsOpenOn(date) != True:
+        Opening = True
+        while Opening:
             date = date + datetime.timedelta(days=1)
+            if self.weeks[6][1] != "00:00":
+                print ("The next opening is the : " + str(date))
+                return None
 
-        print("Next opening is the :" + str(date))
-
-
+        print("Next opening day is the :" + str(date))
 
 magasin = Magasin()
+
+arg = sys.argv[1]
+
+match arg :
+
+    case "schedule":
+        magasin.schedule()
+    
+    case "IsOpenOn":
+        if magasin.IsOpenOn(datetime.datetime.now()):
+            print("Open")
+        else:
+            print("Close")
+
+    case "NextOpeningDate":
+        magasin.NextOpeningDate(datetime.date.today())
+
+    case _ :
+        print("Invalid argument")
