@@ -9,6 +9,8 @@ class Magasin():
     def __init__(self) -> None:
         self.weeks = [["Mon", "08:00", "16:00"], ["Tue", "08:00", "12:00", "14:00", "18:00"], ["Wed", "08:00", "16:00"], ["Thu", "08:00", "12:00","14:00", "18:00"], ["Fri", "08:00", "16:00"], ["Sat", "08:00", "12:00"], ["Sun", "00:00", "00:00"]]
 
+    #param liste1 : liste
+    #return liste
     def find_same_schedule(self, liste1):
         liste2 = []
         liste3 = list(self.weeks)
@@ -20,6 +22,8 @@ class Magasin():
 
         return (liste2,time),liste3  
 
+    #param : None
+    #return : None
     def schedule(self):
         
         
@@ -33,6 +37,10 @@ class Magasin():
         for same in other_schedule:
             print(str(same).replace("'", "").replace("[", "").replace("]", ""))
 
+        return None
+
+    #param : None
+    #return : int
     def find_days(self, day):
         for i in range(7):
             try:
@@ -42,15 +50,8 @@ class Magasin():
             except:
                 None 
 
-    def edit_schedule(self, schedule_changeover_day):
-
-                index = self.find_days(schedule_changeover_day)
-                print("entrer l heur de ouverture")
-                self.weeks[index][1] = input()
-                print("entrer l heur de fermeture")
-                self.weeks[index][2] = input()
-                print("The schedules you have changed " +self.weeks[index])
-
+    #param date : datetime
+    #return : bool
     def IsOpenOn(self, date):
 
         day = date.strftime("%a")
@@ -63,15 +64,16 @@ class Magasin():
         else:
             return False
         
+    #param date : date
+    #retunr None    
     def NextOpeningDate(self,date):
-        Opening = True
-        while Opening:
+        while True:
+            index =self.find_days(date.strftime("%a"))
             date = date + datetime.timedelta(days=1)
-            if self.weeks[6][1] != "00:00":
+            if self.weeks[index][1] != "00:00":
+                print(self.weeks[index][1])
                 print ("The next opening is the : " + str(date))
                 return None
-
-        print("Next opening day is the :" + str(date))
 
 magasin = Magasin()
 
